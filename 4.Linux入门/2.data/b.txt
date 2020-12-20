@@ -1,0 +1,9 @@
+nihao hello hello 你好 
+nihao
+hello 
+
+ls
+
+cd
+world
+pwd

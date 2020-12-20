@@ -1,0 +1,10 @@
+bash.bashrc
+bash_completion
+bash_completion.d
+bindresvport.blacklist
+binfmt.d
+byobu
+ca-certificates
+ca-certificates.conf
+calendar
+cloud

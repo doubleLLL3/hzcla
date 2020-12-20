@@ -1,0 +1,10 @@
+locale.alias
+locale.gen
+localtime
+logcheck
+login.defs
+logrotate.conf
+logrotate.d
+lsb-release
+ltrace.conf
+lvm

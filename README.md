@@ -1,3 +1,3 @@
 # hzcla
 ## source codes for blog
-[Double's Way](Doublelll3.m)
+[Double's Way](doublelll3.ml)

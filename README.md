@@ -1,3 +1,3 @@
 # hzcla
-## source codes for blog
-[Double's Way](https://doublelll3.ml)
+## source codes for Haizei Class of my blog
+[Double's Way](https://doublelll3.ml/hzcla)

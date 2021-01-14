@@ -23,6 +23,7 @@ int main() {
     #define MAX_OP 20
     for (int i = 0; i < MAX_OP; i++) {
         switch (rand() % 5) {
+            // 非等概率——1：3：1——查：插：删
             case 0: printf("0 %d\n", rand() % 15); break;
             case 1: 
             case 2:

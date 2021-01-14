@@ -26,14 +26,14 @@ void mode2str(mode_t smode, char *mode, char *color) {
     };  
     // 获取文件类型
     if (S_ISREG(smode)) mode[0] = '-';
-    else if (S_ISDIR(smode)) mode[0] = 'd', color = "BLUE";
+    else if (S_ISDIR(smode)) mode[0] = 'd', strcpy(color, "BLUE_HL");
     else if (S_ISBLK(smode)) mode[0] = 'b';
     else if (S_ISCHR(smode)) mode[0] = 'c';
 #ifdef S_ISFIFO
     else if (S_ISFIFO(smode)) mode[0] = 'p';
 #endif
 #ifdef S_ISLNK
-    else if (S_ISLNK(smode)) mode[0] = 'l', color = "BLUE_HL";
+    else if (S_ISLNK(smode)) mode[0] = 'l', strcpy(color, "BLUE");
 #endif
 #ifdef S_ISSOCK
     else if (S_ISSOCK(smode)) mode[0] = 's';
@@ -49,10 +49,9 @@ void mode2str(mode_t smode, char *mode, char *color) {
     if (smode & S_ISVTX) mode[9] = (smode & S_IXOTH) ? 't' : 'T';
     // + 配置颜色 [上面也有]
     if (mode[0] == '-') {
-        if (strstr(mode, "x")) color = "GREEN";
-        if (strstr(mode, "s") || strstr(mode, "S")) color = "YELLOW_BG";
+        if (strstr(mode, "x")) strcpy(color, "GREEN_HL");
+        if (strstr(mode, "s") || strstr(mode, "S")) strcpy(color, "YELLOW_BG");
     }
-    printf("in:%s-----\n", color);
     return ;
 }
 
@@ -75,26 +74,38 @@ void myls(char **argv, char *path, int a_flag) {
     // 正序遍历文件列表
     while (i < n - 1) {
         i++;
-        struct dirent *dir = namelist[i];
-        if (dir->d_name[0] == '.' && !a_flag) continue;   // 是否显示隐藏文件
+        struct dirent *dent = namelist[i];
+        if (dent->d_name[0] == '.' && !a_flag) continue;  // 是否显示隐藏文件
         struct stat st;                                   // 需要为该结构体开辟内存
         char ab_path[128];                                // 记录绝对路径
-        absolute_path(ab_path, path, dir->d_name);        // +. 路径拼接
+        absolute_path(ab_path, path, dent->d_name);       // +. 路径拼接
         // 1. 读取文件信息
         if (!lstat(ab_path, &st)) {
-            char mode[16], mtime[32], uname[16], gname[16], *color = "";
+            char mode[16], mtime[32], uname[16], gname[16], filename[512], color[16] = {0};
             mode2str(st.st_mode, mode, color);            // 2. 处理文件信息 [并设置颜色]
-            printf("out:%s-----\n", color);
             mtim2str(&st.st_mtim, mtime, sizeof(mtime));  // 3. 处理修改时间
             strcpy(uname, getpwuid(st.st_uid)->pw_name);  // 4. 获取文件所属者名称
             strcpy(gname, getgrgid(st.st_gid)->gr_name);  // 5. 获取文件所属组名称
+            // 打印除文件名外的基本信息
             printf("%s %lu %s %s %*lu %s ", 
                     mode, st.st_nlink, uname, gname, 
-                    6, st.st_size, mtime
+                    5, st.st_size, mtime
                   );
-            // 按颜色输出文件名
-            if (color == "BLUE") printf(BLUE("%s"), dir->d_name);
-            else if (color == "BLUE_HL") printf(BLUE_HL("%s"), dir->d_name);
+            // 6. 根据颜色包装文件名
+            if (!strcmp(color, "BLUE")) sprintf(filename, BLUE("%s"), dent->d_name);
+            else if (!strcmp(color, "BLUE_HL")) sprintf(filename, BLUE_HL("%s"), dent->d_name);
+            else if (!strcmp(color, "GREEN_HL")) sprintf(filename, GREEN_HL("%s"), dent->d_name);
+            else if (!strcmp(color, "YELLOW_BG")) sprintf(filename, YELLOW_BG("%s"), dent->d_name);
+            else strcpy(filename, dent->d_name);
+            // 7. 对软连接特殊处理
+            if (mode[0] == 'l') {
+                char linkfile[32];
+                readlink(ab_path, linkfile, 32);
+                strcat(filename, " -> ");
+                strcat(filename, linkfile);
+            }
+            // 单独打印文件名称 [含颜色]
+            printf("%s\n", filename);
         } else {
             perror("lstat");
             exit(1);

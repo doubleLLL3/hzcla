@@ -19,7 +19,7 @@
 #include <grp.h>
 
 #define COLOR(a, b) "\033[" #b "m" a "\033[0m"
-#define COLOR_BG(a, b) "\033[" #b "m" a "\033[0m"
+#define COLOR_BG(a, b) "\033[2;" #b "m" a "\033[0m"
 #define COLOR_HL(a, b) "\033[1;" #b "m" a "\033[0m"
 
 #define RED(a) COLOR(a, 31)
@@ -36,7 +36,7 @@
 
 #define RED_BG(a) COLOR_BG(a, 41)
 #define GREEN_BG(a) COLOR_BG(a, 42)
-#define YELLOW_BG(a) COLOR_BG(a, 42)
+#define YELLOW_BG(a) COLOR_BG(a, 43)
 #define BLUE_BG(a) COLOR_BG(a, 44)
 #define PURPLE_BG(a) COLOR_BG(a, 45)
 

@@ -15,29 +15,24 @@
 int main(void){
     fd_set rfds;
     struct timeval tv;
-    int retval;
-
-    /* Watch stdin (fd 0) to see when it has input. */
-
-    FD_ZERO(&rfds);  // 清空set
-    FD_SET(0, &rfds);  // 把0号文件加到rfds中
-
-    /* Wait up to five seconds. */
-
-    tv.tv_sec = 5;
+    int ret;
+    // 观察0号文件的读状态
+    FD_ZERO(&rfds);    // 先清空集合rfds，排除陌生文件
+    FD_SET(0, &rfds);  // 把0号文件添加到集合中
+    // 最多等待 5 s 0 ms
+    tv.tv_sec = 5;  
     tv.tv_usec = 0;
+    // select监控0号文件是否可读，只等待tv时间，监控一次
+    ret = select(1, &rfds, NULL, NULL, &tv);
 
-    retval = select(1, &rfds, NULL, NULL, &tv);
-    /* Don't rely on the value of tv now! */
-
-    if (retval == -1)
+    if (ret == -1)
         perror("select()");
-    else if (retval) {
-        
+    else if (ret) {
+        //char buff[512] = {0};
+        //scanf("%s", buff);            // 收走数据
         printf("Data is available now.\n");
-        /* FD_ISSET(0, &rfds) will be true. */
+        // 此时FD_ISSET(0, &rdfs) == 1
     } else
         printf("No data within five seconds.\n");
-
-    exit(EXIT_SUCCESS);
+    return 0;
 }

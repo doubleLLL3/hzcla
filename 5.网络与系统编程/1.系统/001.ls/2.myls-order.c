@@ -62,7 +62,7 @@ void mtim2str(struct timespec *mtim, char *str, size_t max) {
     return ;
 }
 
-void myls(char **argv, char *path, int a_flag) {
+void myls(char *path, int a_flag) {
     // 0. 按 [字典序] 读取出目录的文件列表
     struct dirent **namelist;
     int n, i = -1;
@@ -124,13 +124,12 @@ void show_tips(char **argv) {
 int main(int argc, char **argv) {
     // 不带路径参数 [默认为当前目录]
     if (argc == 2){
-        if (!strcmp(argv[1], "-al")) myls(argv, ".", 1);
-        else if (!strcmp(argv[1], "-l")) myls(argv, ".", 0);
+        if (!strcmp(argv[1], "-al")) myls(".", 1);
+        else if (!strcmp(argv[1], "-l")) myls(".", 0);
         else show_tips(argv), exit(1);
         return 0;
     }
-    int opt;
-    int a_flag = 0;  // 判断-a选项
+    int opt, a_flag = 0;  // a_flag：判断-a选项
     // 带路径参数
     while ((opt = getopt(argc, argv, "al:")) != -1) {
         switch (opt) {
@@ -138,7 +137,7 @@ int main(int argc, char **argv) {
                 a_flag = 1;
             } break;
             case 'l': {
-                myls(argv, optarg, a_flag);
+                myls(optarg, a_flag);
             } break;
             default: {
                 show_tips(argv);

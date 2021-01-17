@@ -17,8 +17,8 @@
 #include <algorithm>
 using namespace std;
 #define MAX_N 1000000
-int arr[MAX_N + 5];
-int dp[MAX_N + 5];  // dp代表动态规划问题
+int arr[MAX_N + 5];  // 存储数据
+int dp[MAX_N + 5];   // 动规问题中常用dp命名数组
 
 int main() {
     int n;
@@ -29,14 +29,14 @@ int main() {
     }
     int ans = 0;
     for (int i = 0; i < n; i++) {
-        dp[i] = 1;  // 初始为1，算自己
+        dp[i] = 1;   // 算自己，初始为1
+        // 看前面的状态
         for (int j = 0; j < i; j++) {
-            if (arr[j] >= arr[i]) continue;
-            dp[i] = max(dp[i], dp[j] + 1);  // dp[i]代表之前的比较结果
+            if (arr[j] >= arr[i]) continue;  // 对偶条件
+            dp[i] = max(dp[i], dp[j] + 1);   // dp[i]代表之前最大的dp[j] + 1的值
         }
-        ans = max(ans, dp[i]);
+        ans = max(ans, dp[i]);               // 记录最大的dp[i]的值
     }
     cout << ans << endl;
-    cout << dp[n - 1] << endl;
     return 0;
 }

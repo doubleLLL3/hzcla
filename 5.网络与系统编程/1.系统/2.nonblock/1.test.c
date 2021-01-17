@@ -9,11 +9,10 @@
 
 int main() {
     int age, ret;
-    make_nonblock(0);
-    //sleep(5);
+    make_nonblock(0);  // 0、1、2文件不需要open，继承自父进程
+    sleep(5);        // sleep完再对非阻塞的stdin进行scanf
     ret = scanf("%d", &age);
-    printf("double is %d years old! <%d>\n", age, ret);
-    perror("scanf");
-
+    printf("double is %d years old! < %d >\n", age, ret);
+    perror("scanf");   // 查看此时errno对应的报错信息
     return 0;
 }

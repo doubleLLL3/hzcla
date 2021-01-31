@@ -16,34 +16,29 @@
 #include <map>
 #include <algorithm>
 using namespace std;
-#define MAX_N 100
-#define MAX_K 50000
-long long dp[MAX_N + 5][MAX_K + 5];
+#define MAX_N 32
+#define MAX_X 70000
+long long f[2][MAX_X + 5];
 
 int solve(int n, int m) {
     if (n == 1) return m;
-    for (int i = 1; i <= MAX_K; i++) dp[1][i] = i;
+    // 初始化，只有一个鸡蛋，可以扔多少次就对应最多测多少层楼
+    for (int i = 1; i <= MAX_X; i++) f[1][i] = i;
     for (int i = 2; i <= n; i++) {
-        for (int k = 1; k <= MAX_K; k++) {
-            dp[i][k] = dp[i - 1][k - 1] + dp[i][k - 1] + 1;
+        for (int x = 1; x <= MAX_X; x++) {
+            // 上 + 下 + 1
+            f[i % 2][x] = f[i % 2][x - 1] + f[(i - 1) % 2][x - 1] + 1;
         }
     }
-    int k = 1;
-    while (dp[n][k] <= m) k++;
-    return k;
-    printf("n = %d\n", n);
-    for (int i = 1; i <= 15; i++) {
-        printf("k = %d, dp = %lld\n", i, dp[n][i]);
-    }
-    return 0;
-
+    int x = 1;
+    while (f[n % 2][x] < m) x++;  // 找第一个使>=楼层数m，对应的方法数x
+    return x;
 }
 
 int main() {
     int n, m;
     cin >> n >> m;
     cout << solve(n, m) << endl;
-
     return 0;
 }
 

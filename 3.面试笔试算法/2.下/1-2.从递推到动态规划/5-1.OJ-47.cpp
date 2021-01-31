@@ -19,19 +19,22 @@ using namespace std;
 #define MAX_N 100
 #define MAX_V 10000
 int v[MAX_N + 5], w[MAX_N + 5];
-int dp[MAX_N + 5];
+int dp[MAX_N + 5][MAX_V + 5];
 
 int main() {
-    int V, n, v, w;
+    int V, n;
     cin >> V >> n;
+    // 存储物品重量、价值
+    for (int i = 1; i <= n; i++) cin >> v[i] >> w[i];
+    // [i] 前i件物品、[j] 背包最大承重为j：均从1开始遍历
     for (int i = 1; i <= n; i++) {
-        cin >> v >> w;
-        for (int j = V; j >= v; j--) {
-            // 隐含：右边的dp[j]、dp[j - v]的索引是其实是i - 1
-            // 所以需要逆向遍历，否则正向遍历，j - v[比j小]可能已经被改变了
-            dp[j] = max(dp[j], dp[j - v] + w);
+        for (int j = 1; j <= V; j++) {
+            dp[i][j] = dp[i - 1][j];
+            // 当可以放下v[i]重的物品时，还有另一种状态
+            if (j >= v[i]) 
+                dp[i][j] = max(dp[i][j], dp[i - 1][j - v[i]] + w[i]);
         }
     }
-    cout << dp[V] << endl;
+    cout << dp[n][V] << endl;
     return 0;
 }

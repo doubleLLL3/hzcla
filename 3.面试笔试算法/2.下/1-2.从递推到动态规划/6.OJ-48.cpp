@@ -1,8 +1,8 @@
 /*************************************************************************
-	> File Name: 9.OJ-261.cpp
+	> File Name: 6.OJ-48.cpp
 	> Author: Double
 	> Mail: doubleliu3@gmail.com
-	> Created Time: Sun 10 Jan 2021 02:26:14 PM CST
+	> Created Time: Sat 09 Jan 2021 03:50:13 PM CST
  ************************************************************************/
 
 #include <iostream>
@@ -16,20 +16,19 @@
 #include <map>
 #include <algorithm>
 using namespace std;
-
-class 
+#define MAX_N 10000
+int dp[MAX_N + 5];
 
 int main() {
-    long long n;
-    cin >> n;
-    for (int i = 0; i < n; i++) {
-        cin >> op;
-        switch(op[0]) {
-            case 'I': cin >> val; s.insert(val); break;
-            case 'D': s.del(); break;
-            case 'L': s.move_left(); break;
-            case 'R': s.move_right(); break;
-            case 'Q': 
+    int V, n, v, w;
+    cin >> n >> V;
+    for (int i = 1; i <= n; i++) {
+        cin >> v >> w;
+        // 与0/1背包相反，此处正向遍历j
+        for (int j = v; j <= V; j++) {
+            dp[j] = max(dp[j], dp[j - v] + w);
         }
     }
+    cout << dp[V] << endl;
+    return 0;
 }

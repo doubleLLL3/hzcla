@@ -1,5 +1,5 @@
 /*************************************************************************
-	> File Name: 7.OJ-49.cpp
+	> File Name: 7-1.OJ-49.cpp
 	> Author: Double
 	> Mail: doubleliu3@gmail.com
 	> Created Time: Sat 09 Jan 2021 04:05:40 PM CST
@@ -24,6 +24,7 @@ int main() {
     cin >> V >> n;
     for (int i = 1; i <= n; i++) {
         cin >> v >> w >> s;
+        // 当成s个单独的物品；k从0还是1开始不重要
         for (int k = 0; k < s; k++) {
             for (int j = V; j >= v; j--) {
                 dp[j] = max(dp[j], dp[j - v] + w);

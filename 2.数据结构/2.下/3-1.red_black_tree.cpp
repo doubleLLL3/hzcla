@@ -79,7 +79,7 @@ Node *insert_maintain(Node *root) {
         }
         root = left_rotate(root);
     }
-// 染色：采用红色上浮方式，亦可红色下沉
+// 染色：采用红色上浮方式，亦可红色下沉 [此时需区分情况一和情况二]
 insert_end:
     root->color = 0;
     root->lchild->color = root->rchild->color = 1;

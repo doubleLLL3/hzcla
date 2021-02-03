@@ -6,24 +6,18 @@
  ************************************************************************/
 
 #include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <queue>
-#include <stack>
-#include <string>
-#include <vector>
-#include <set>
-#include <map>
-#include <algorithm>
 using namespace std;
-#define MAX_N 1000
 int inv[7] = {0};
 
-
+// 求 1~6 模7的逆元
 int main() {
-    inv[1] = 1;
+    inv[1] = 1;  // 初始化：1的逆元是1
     for (int i = 2; i < 7; i++) {
-        inv[i] = ((-(7 / i) * inv[7 % i]) % 7 + 7) % 7;
+        // 求逆元
+        // inv[i] = -k * inv[r] % p
+        inv[i] = -(7 / i) * inv[7 % i] % 7;
+        // 转换成正数
+        inv[i] = (inv[i] + 7) % 7;
         cout << i << " : " << inv[i] << endl;
     }
     return 0;

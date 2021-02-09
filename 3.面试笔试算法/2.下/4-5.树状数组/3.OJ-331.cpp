@@ -44,7 +44,7 @@ int cnt[MAX_N + 5], ind[MAX_N + 5];             // cnt：输入；ind：答案�
 
 void read() {
     cin >> n;
-    ind[1] = 0;
+    cnt[1] = 0;
     // 从2开始 [题意]
     for (int i = 2; i <= n; i++) cin >> cnt[i];
     // 初始化树状数组

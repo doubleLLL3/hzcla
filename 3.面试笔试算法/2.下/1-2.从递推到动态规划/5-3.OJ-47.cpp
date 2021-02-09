@@ -16,9 +16,7 @@
 #include <map>
 #include <algorithm>
 using namespace std;
-#define MAX_N 100
 #define MAX_V 10000
-int v[MAX_N + 5], w[MAX_N + 5];
 int dp[MAX_V + 5];
 
 int main() {
@@ -30,6 +28,7 @@ int main() {
             // 隐含：
             // 右边的dp[j]、dp[j - v]对应的【商品件数维度】的索引其实是i - 1，而左边是i
             // 所以逆向遍历j可以保证上面的i - 1；否则正向遍历，dp[j - v](比j小)已经更新成为i了
+            // [PS] V->v即可，对于v->1的部分直接保持为上一个状态的结果，即可
             dp[j] = max(dp[j], dp[j - v] + w);
         }
     }

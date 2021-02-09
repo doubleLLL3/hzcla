@@ -8,13 +8,6 @@
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
-#include <queue>
-#include <stack>
-#include <string>
-#include <vector>
-#include <set>
-#include <map>
-#include <algorithm>
 #include <cstring>
 using namespace std;
 #define MAX_N 1000000
@@ -39,7 +32,7 @@ int main() {
     len[0] = 0;                                    // 再将第0位设为极小值，保证单调性
     for (int i = 1; i <= n; i++) {
         scanf("%d", &val);
-        dp = binary_search(len, ans + 1, val);     // dp代表长度；+1引入了一个极大值做查找，保证0011的1
+        dp = binary_search(len, ans + 1, val);     // dp代表长度；+1代表加入一个元素后，长度最多增加1
         len[dp] = val;                             // 维护len数组，时刻保证【单调性】
         ans = max(dp, ans);                        // ans更新最大长度
     }

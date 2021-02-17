@@ -20,40 +20,36 @@ int main(int argc, char **argv) {
                 break;
             default:
                 fprintf(stderr, "Usage : %s -n name\n", argv[0]);
-                exit(1); // 不能用0？
+                exit(1);
         }
     }
-
     key_t key = ftok(".", 202101);
     if  ((shmid = shmget(key, sizeof(struct Msg), IPC_CREAT | 0600)) < 0) {
         perror("shmget");
         exit(1);
     }
-    if ((share_memory = shmat(shmid, NULL, 0)) < 0) {
+    if ((share_memory = shmat(shmid, NULL, 0)) == (void *)-1) {
         perror("shmat");
         exit(1);
     }
-
     while (1) {
         char msg[1024] = {0};
-        scanf("%[^\n]s", msg);
+        scanf("%[^\n]s", msg);                          // 可读入空格，但注意getchar收掉回车
         getchar();
-        if (!strlen(msg)) continue;
-        // 后添加：等server端收到消息再
+        if (!strlen(msg)) continue;                     // 如果消息为空
+        // 等服务端收到消息并置空后，再加锁 [防止客户端抢锁，导致服务端不能收到信号]
         while (1) {
             if (!strlen(share_memory->msg)) {
-                pthread_mutex_lock(&share_memory->mutex);
+                pthread_mutex_lock(&share_memory->mutex);  // [隐患：可能被阻塞]
                 break;
             }
         }
-        //pthread_mutex_lock(&share_memory->mutex);
         printf("Sending: %s...\n", msg);
-        strcpy(share_memory->msg, msg);
+        strcpy(share_memory->msg, msg);                 // 给共享内存赋值
         strcpy(share_memory->name, name);
-        pthread_cond_signal(&share_memory->cond);
-        pthread_mutex_unlock(&share_memory->mutex);
+        pthread_cond_signal(&share_memory->cond);       // 发信号
+        pthread_mutex_unlock(&share_memory->mutex);     // 或者放在上一行
         printf("Client signal the cond\n");
     }
-
     return 0;
 }

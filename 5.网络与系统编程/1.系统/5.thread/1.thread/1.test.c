@@ -12,6 +12,7 @@ struct MyArg {
     int age;
 };
 
+// 
 void *print(void *arg) {
     struct MyArg in1;
     in1 = *(struct MyArg *)arg;
@@ -32,8 +33,8 @@ int main() {
     struct MyArg arg;
     strcpy(arg.name, name);
     arg.age = age;
-
+    // NULL：默认属性
     pthread_create(&thread, NULL, print, &arg);
-    usleep(1);
+    usleep(1);  // 等待，保证上面线程可以跑，而不会因进程结束而直接被杀
     return 0;
 }

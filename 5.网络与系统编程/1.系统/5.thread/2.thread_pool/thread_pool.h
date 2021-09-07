@@ -9,19 +9,14 @@
 #define _THREAD_POOL_H
 
 struct task_queue {
-    int size;
-    int total;
-    int head;
-    int tail;
-    char **data;
+    int size, total, head, tail;
+    char **data;          // 存放的数据：多个字符串的地址
     pthread_mutex_t mutex;
-    pthread_cond_t cond;  // 告知线程
+    pthread_cond_t cond;  // 有任务时，告知线程
 };
 
 void task_queue_init(struct task_queue *taskQueue, int size);
 void task_queue_push(struct task_queue *taskQueue, char *str);
 char *task_queue_pop(struct task_queue *taskQueue);
-
-
 
 #endif

@@ -25,7 +25,8 @@ void quick_sort(int *num, int l, int r) {
     // 【优化】减少递归的使用，增加循环
     // 此处变成了循环判断 l < r
     while (l < r) {
-        int x = l, y = r, z = num[(l + r) >> 1];  // 【优化】基准值选中间值
+        //int x = l, y = r, z = num[(l + r) >> 1];  // 【优化】基准值选中间值
+        int x = l, y = r, z = num[l];  // 【优化】基准值选中间值
         do {
             // 【优化】两个指针都找两个值，直接交换
             // 【关键】x <= y，不能用<，要将x、y错开；num[] < z，不能用<=，经过基准值要停下
@@ -61,7 +62,7 @@ void randint(int *num, int n) {
 
 int main() {
     srand(time(0));
-    #define max_n 100000
+    #define max_n 100
     int arr[max_n];
     randint(arr, max_n);
     quick_sort(arr, 0, max_n - 1);

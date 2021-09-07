@@ -1,12 +1,13 @@
 /*************************************************************************
-	> File Name: common.h
+	> File Name: cmd.h
 	> Author: Double
 	> Mail: doubleliu3@gmail.com
-	> Created Time: Tue 05 Jan 2021 06:36:59 PM CST
+	> Created Time: Thu 04 Mar 2021 08:06:17 PM CST
  ************************************************************************/
 
-#ifndef _COMMON_H
-#define _COMMON_H
-int make_nonblock(int fd);
-int make_block(int fd);
+#ifndef _CMD_H
+#define _CMD_H
+#define SEND 0x1
+#define RECV 0x2
+#define NORMAL 0x4
 #endif

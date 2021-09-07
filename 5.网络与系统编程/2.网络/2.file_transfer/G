@@ -1,0 +1,2 @@
+gcc 1.server.c common/tcp_server.c common/common.c -o server
+gcc 1.client.c common/tcp_client.c -o client

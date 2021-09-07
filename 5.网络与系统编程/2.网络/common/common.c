@@ -29,3 +29,27 @@ int make_block(int fd) {
     flag &= ~O_NONBLOCK;
     return fcntl(fd, F_SETFL, flag);
 }
+
+int recv_str_nonblock(int sockfd, char *buff, long size, int timeout) {
+    // select，注意timeout为usec
+    // 参照man手册的EXAMPLE
+    fd_set rfds;
+    int ret;
+    struct timeval tv;
+    
+    FD_ZERO(&rfds);
+    FD_SET(sockfd, &rfds);
+
+    tv.tv_sec = 0;
+    tv.tv_usec = timeout;
+
+    if ((ret = select(sockfd + 1, &rfds, NULL, NULL, &tv)) <= 0) {
+        return -1;
+    }
+
+    int rsize = recv(sockfd, buff, sizeof(buff), 0);
+    if (rsize <= 0) {
+        return -1;
+    }
+    return 0;
+}

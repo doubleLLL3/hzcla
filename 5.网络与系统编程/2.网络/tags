@@ -4,13 +4,41 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Client	2.file_transfer/1.server.c	/^struct Client {$/;"	s	file:
+MAX_CLIENTS	2.file_transfer/1.server.c	11;"	d	file:
+MAX_EVENTS	2.file_transfer/1.epoll.c	9;"	d	file:
+MAX_EVENTS	2.file_transfer/1.server.c	10;"	d	file:
+NORMAL	2.file_transfer/cmd.h	12;"	d
+RECV	2.file_transfer/cmd.h	11;"	d
+SEND	2.file_transfer/cmd.h	10;"	d
+_CMD_H	2.file_transfer/cmd.h	9;"	d
+_COMMON_H	2.file_transfer/common/common.h	9;"	d
 _COMMON_H	common/common.h	9;"	d
+_HEAD_H	2.file_transfer/common/head.h	9;"	d
 _HEAD_H	common/head.h	9;"	d
+_TCP_CLIENT_H	2.file_transfer/common/tcp_client.h	9;"	d
 _TCP_CLIENT_H	common/tcp_client.h	9;"	d
+_TCP_SERVER_H	2.file_transfer/common/tcp_server.h	9;"	d
 _TCP_SERVER_H	common/tcp_server.h	9;"	d
+fd	2.file_transfer/1.server.c	/^    int fd;$/;"	m	struct:Client	file:
+logout	1.client.c	/^void logout(int signum) {$/;"	f
+logout	2.file_transfer/1.client.c	/^void logout(int signum) {$/;"	f
 main	1.client.c	/^int main(int argc, char **argv) {$/;"	f
 main	1.server.c	/^int main(int argc, char **argv) {$/;"	f
+main	2.file_transfer/1.client.c	/^int main(int argc, char **argv) {$/;"	f
+main	2.file_transfer/1.epoll.c	/^int main() {$/;"	f
+main	2.file_transfer/1.server.c	/^int main(int argc, char **argv) {$/;"	f
+make_block	2.file_transfer/common/common.c	/^int make_block(int fd) {$/;"	f
 make_block	common/common.c	/^int make_block(int fd) {$/;"	f
+make_nonblock	2.file_transfer/common/common.c	/^int make_nonblock(int fd) {$/;"	f
 make_nonblock	common/common.c	/^int make_nonblock(int fd) {$/;"	f
+name	2.file_transfer/1.server.c	/^    char name[20];$/;"	m	struct:Client	file:
+online	2.file_transfer/1.server.c	/^    int online;$/;"	m	struct:Client	file:
+recv_str_nonblock	2.file_transfer/common/common.c	/^int recv_str_nonblock(int sockfd, char *buff, long size, int timeout) {$/;"	f
+recv_str_nonblock	common/common.c	/^int recv_str_nonblock(int sockfd, char *buff, long size, int timeout) {$/;"	f
+socket_connect	2.file_transfer/common/tcp_client.c	/^int socket_connect(char *ip, int port) {$/;"	f
 socket_connect	common/tcp_client.c	/^int socket_connect(char *ip, int port) {$/;"	f
+socket_create	2.file_transfer/common/tcp_server.c	/^int socket_create(int port) {$/;"	f
 socket_create	common/tcp_server.c	/^int socket_create(int port) {$/;"	f
+sockfd	1.client.c	/^int sockfd;$/;"	v
+sockfd	2.file_transfer/1.client.c	/^int sockfd;$/;"	v

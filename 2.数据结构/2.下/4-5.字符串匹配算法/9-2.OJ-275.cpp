@@ -21,16 +21,19 @@ long long H1[MAX_N + 5];
 long long K[MAX_N + 5];  
 long long K1[MAX_N + 5];
 long long inv[P];
-long long inv1[P];
+long long inv1[P1];
 char s[MAX_N + 5];
 
 // 初始化 * 2
 void init() {
     inv[1] = 1;
+    inv1[1] = 1;
     for (long long i = 2; i < P; i++) {
         inv[i] = ((-(P / i) * inv[P % i]) % P + P) % P;
-        inv1[i] = ((-(P1 / i) * inv1[P1 % i]) % P1 + P1) % P1;
     }
+    for (long long i = 2; i < P1; i++) {
+        inv1[i] = ((-(P1 / i) * inv1[P1 % i]) % P1 + P1) % P1;
+    }  // 两个逆元数组分开初始化，保证初始化完全
     K[0] = 1;
     K1[0] = 1;
     for (long long i = 1; i <= MAX_N; i++) {

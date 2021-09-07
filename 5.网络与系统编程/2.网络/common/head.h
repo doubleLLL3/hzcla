@@ -21,6 +21,7 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #include <pthread.h>
+#include <sys/epoll.h>
 
 #include <sys/socket.h>
 #include <netinet/in.h>

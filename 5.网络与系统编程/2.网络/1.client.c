@@ -6,9 +6,10 @@
  ************************************************************************/
 
 #include "common/head.h"
+
 int sockfd;
 
-// 函数出入参数没用到，但规定要有
+// 信号的handler [函数的传入参数没用到，规范里有]
 void logout(int signum) {
     close(sockfd);
     printf("ByeBye!\n");
@@ -17,30 +18,38 @@ void logout(int signum) {
 
 int main(int argc, char **argv) {
     int port;
-    char buff[512] = {0}, ip[20] = {0};
+    char buff[512] = {0}, ip[20] = {0};  // 存放发送/接收数据、要连接的IP [输入]
 
     if (argc != 3) {
         fprintf(stderr, "Usage : %s ip port\n", argv[0]);
         exit(1);
     }
+    // 0、获取输入：IP、port
     strcpy(ip, argv[1]);
     port = atoi(argv[2]);
-    signal(SIGINT, logout); 
+
+    signal(SIGINT, logout);              // 设置信号捕捉器 [^C信号，代号2]
+
+    // 1、调用接口：主动连接指定IP和端口
     if ((sockfd = socket_connect(ip, port)) < 0) {
         perror("socket_connet");
         exit(1);
     }
     
-    printf("I think is connected.\n");
+    printf("Connected！\n");
 
+    // 2、进行数据传输
     while (1) {
+        // [1] 输入数据
         printf("<input> : ");
         scanf("%[^\n]s", buff);
         getchar();
-        if (!strlen(buff)) continue;
-        send(sockfd, buff, strlen(buff), 0);
+        if (!strlen(buff)) continue;          // 没有输入 [只有回车]
+        // [2] 发送数据
+        send(sockfd, buff, strlen(buff), 0);  // strlen：有多少发多少
         printf("sending %s...\n", buff);
-        bzero(buff, sizeof(buff));
+        bzero(buff, sizeof(buff));            // 清空供后续使用，并保证数据安全
+        // [3] 获取反馈，确认发送成功
         recv(sockfd, buff, sizeof(buff), 0);
         printf("<Server> : %s\n", buff);
         bzero(buff, sizeof(buff));

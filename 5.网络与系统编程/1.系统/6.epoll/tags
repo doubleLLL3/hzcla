@@ -1,0 +1,16 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+_COMMON_H	common/common.h	9;"	d
+_HEAD_H	common/head.h	9;"	d
+_TCP_CLIENT_H	common/tcp_client.h	9;"	d
+_TCP_SERVER_H	common/tcp_server.h	9;"	d
+main	1.client.c	/^int main(int argc, char **argv) {$/;"	f
+main	1.server.c	/^int main(int argc, char **argv) {$/;"	f
+make_block	common/common.c	/^int make_block(int fd) {$/;"	f
+make_nonblock	common/common.c	/^int make_nonblock(int fd) {$/;"	f
+socket_connect	common/tcp_client.c	/^int socket_connect(char *ip, int port) {$/;"	f
+socket_create	common/tcp_server.c	/^int socket_create(int port) {$/;"	f
